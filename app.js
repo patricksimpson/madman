@@ -10,6 +10,8 @@ var express = require('express')
 
 var app = express();
 
+var fs = require('fs');
+
 poet = require('poet')(app);
 
 var locals = { 
@@ -45,6 +47,21 @@ app.set( 'view engine', 'jade' );
 //app.use( express.static( __dirname + '/public' ));
 app.use( poet.middleware() );
 //app.use( app.router );
+
+app.get ('/stylesheets/app.css', function ( req, res) {
+  console.log("Request handler 'style' was called.");
+  fs.readFile(__dirname + "/public/stylesheets/app.css", function(error, file) {
+    if(error) {
+        res.writeHead(500, {"Content-Type": "text/plain"});
+        res.write(error + "\n");
+        res.end();
+    } else {
+        res.writeHead(200, {"Content-Type": "text/css"});
+        res.write(file);
+        res.end();
+    }
+  });
+});
 
 app.get( '/post/:post', function ( req, res ) {
   console.log("got here");
@@ -90,5 +107,8 @@ app.get( '/', function ( req, res ) {
   res.render( 'index', locals);
 
 });
+
+app.use(express.static(__dirname + '/public'));
+
 console.log("Listening on 3000");
 app.listen( 3000 );

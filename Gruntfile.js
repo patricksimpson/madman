@@ -22,14 +22,14 @@ compass: {                  // Task
   dist: {                   // Target
     options: {              // Target options
       sassDir: './front/scss',
-      cssDir: './public/styles/',
+      cssDir: './public/stylesheets/',
       environment: 'production'
     }
   },
   dev: {                    // Another target
     options: {
       sassDir: './front/scss',
-      cssDir: './public/styles'
+      cssDir: './public/stylesheets'
     }
   }
 }
@@ -38,5 +38,6 @@ compass: {                  // Task
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-notify');
+  grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.registerTask('default', ['coffee:dev', 'compass:dev']);
 };
